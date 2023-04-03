@@ -1,0 +1,7 @@
+깃허브
+
+
+8629
+yum list java*jdk-devel
+
+yum install java-1.8.0-openjdk-devel

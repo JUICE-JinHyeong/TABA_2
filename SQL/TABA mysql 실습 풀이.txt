@@ -1,0 +1,139 @@
+사원 TABLE S_EMP
+부서 TABLE S_DEPT
+
+
+중복제거 : DISTINCT
+
+
+1. 사원 테이블의 모든 데이터를 출력하라
+
+SELECT		*
+FROM		S_EMP;
+
+2. 사원 테이블에서 각 사원의 직무, 사원번호, 이름, 입사일을 출력하라.
+
+SELECT	JOB , DEPTNO , ENAME , HIREDATE
+FROM	S_EMP ;
+
+3. 사원 테이블에서 직무를 출력하되, 각 항목이 중복되지 않게 출력하라.
+
+SELECT	DISTINCT JOB 
+FROM	S_EMP ;
+
+4. 급여가 2,700이상인 사원의 이름 및 급여를 출력하라
+
+SELECT	ENAME , JOB
+FROM	S_EMP
+WHERE	SAL >= 2700;
+
+5. 급여가 2,000 이상 - 4,000이하의 범위에 속하지 않는 모든 사원의 이름과 급여를 출력하되, 급여를 기준으로 내림차순으로 정렬하라.
+
+SELECT	ENAME, SAL
+FROM	S_EMP
+WHERE	SAL NOT BETWEEN 2000 AND 4000
+ORDER BY SAL DESC;
+
+
+6. 1981년 2월 20일 ~ 1981년 5월 1일에 입사한 사원의 이름, 직무, 입사일을 출력하되, 입사일을 기준으로 오름차순 정렬하라.
+
+SELECT	ENAME, JOB , HIREDATE
+FROM	S_EMP
+WHERE	TO_CHAR(HIREDATE , 'YYMMDD') BETWEEN '810220' AND '810501'
+ORDER BY HIREDATE;
+ 
+
+7. 10번 및 30번 부서에 속하는 모든 사원의 이름과 부서 번호를 출력하되, 알파벳순으로 정렬하라.
+
+SELECT	ENAME , DEPTNO
+FROM	S_EMP
+WHERE	DEPTNO BETWEEN 10 AND 30
+ORDER BY UPPER(ENAME);
+
+8. 10번 및 30번 부서에 속하는 모든 사원 중 급여가 1,500을 넘는 사원의 이름과급여를 출력하라. 단, 칼럼명을 각각 “Employee" 및 ”Monthly Salary"로 지정하라.
+
+SELECT	ENAME , SAL
+FROM	S_EMP
+WHERE	DEPTNO NOT IN 20 AND SAL > 1500;
+
+9. 관리자가 없는 모든 사원의 이름 및 직무를 출력하라.
+
+SELECT	ENAME , JOB 
+FROM	S_EMP
+WHERE	MGR IS NULL;
+
+10. 커미션을 받는 모든 사원의 이름, 급여 및 커미션을 출력하되, 급여를 내림차순하여 정렬하라.
+
+SELECT	ENAME, SAL , COMM
+FROM	S_EMP
+WHERE	COMM IS NOT NULL
+ORDER BY SAL DESC;
+
+11. 이름의 세 번째 문자가 A인 모든 사원의 이름을 출력하라.
+
+SELECT	ENAME
+FROM	S_EMP
+WHERE	UPPER(ENAME) LIKE '__A%' ;
+
+
+12. 이름에 L이 두 번 들어가며 부서 30에 속해있는 사원의 이름을 출력하라.
+
+SELECT	ENAME
+FROM	S_EMP
+WHERE	UPPER(ENAME) LIKE '%L%L%'  AND DEPTNO = 30 ;
+
+13. 직업이 Clerk 또는 Analyst이면서 급여가 1000, 3000, 5000 이 아닌 모든 사원의 이름, 직업 및 급여를 출력하라.
+# 칼럼 JOB에는 모두 대문자로 데이터가 입력되어있는데, 문제는 소문자로 알려준다.
+# 만일 IN 함수 안에 CLERK를 Clerk로 적으면 SQL이 값을 찾지 못한다. 주의하자.
+
+SELECT	ENAME, JOB , SAL
+FROM	S_EMP
+WHERE	JOB IN ('CLERK' , 'ANALYST') AND (SAL NOT IN (1000 , 3000 , 5000)) ;
+
+14. 사원번호, 이름, 급여 그리고 15%인상된 급여를 정수로 표시하되 컬럼명을 “New Salary”로 지정하여 출력하라.
+
+SELECT	DEPTNO , ENAME , ROUND(SAL+(SAL*1.15)) AS "New Salary"
+FROM	S_EMP;
+
+
+15. 14번 문제와 동일한 데이터에서 급여 인상분(새 급여에서 이전 급여를 뺀 값)을 추가해서 출력하라. 단, 컬럼명은 Increase로 하라.
+
+SELECT	DEPTNO , ENAME , ROUND(SAL+(SAL*1.15)) AS "New Salary" , ROUND(SAL+(SAL*1.15)) - SAL AS "Increase" 
+FROM	S_EMP;
+
+16. 사원의 이름과 커미션을 출력하되, 커미션이 책정되지 않은 사원의 커미션은 'nocommission'으로 출력하라.
+
+SELECT	ENAME , COMM , NVL(TO_CHAR(COMM) , 'nocommission')
+FROM	S_EMP ;
+
+17. 직무와 각 직무별 최고 급여와 최저 급여를 출력하라.
+
+SELECT	JOB , MAX(SAL) , MIN(SAL)
+FROM	S_EMP
+GROUP BY JOB ;
+
+18. 직무와 인원수, 평균 급여를 출력하라. 단, 직무별 인원수가 3 이상인 경우에만 출력하라.
+
+SELECT	JOB , COUNT(*) , AVG(SAL)
+FROM	S_EMP
+GROUP BY JOB
+HAVING	COUNT(*) >=3 ;
+
+19. 각 부서별 부서번호, 사원 수, 급여 합계를 출력하라.
+
+SELECT	DEPTNO , COUNT(*) , SUM(SAL)
+FROM	S_EMP
+GROUP BY DEPTNO ;
+
+
+20. 부서번호, 부서 별 사원 수, 급여 합계를 보이되, 급여 합계가 7,000 ~ 11,000만 출력하라. 단 입사날짜가 1981-01-01 이전 사원은 제외하고, 급여 합계가 많은 순으로 출력하라.
+
+SELECT	DEPTNO , COUNT(*) , SUM(SAL)
+FROM	S_EMP
+WHERE	TO_CHAR(HIREDATE , 'YY-MM-DD') >= '81-01-01'
+GROUP BY DEPTNO
+HAVING	SUM(SAL) BETWEEN 7000 AND 11000 
+ORDER BY SUM(SAL) DESC ;
+
+
+
+

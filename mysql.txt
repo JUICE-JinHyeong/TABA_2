@@ -1,0 +1,15 @@
+centos mysql 접속
+
+mysql -u root -p
+변경 전 qcvrGKQ%z3pT
+변경 후 @@TaBa01
+
+show databases;
+
+use database name
+데이터 베이스 바꾸기
+
+show tables;
+테이블 변경
+
+create database 생성할 db이름

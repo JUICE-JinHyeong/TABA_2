@@ -1,0 +1,18 @@
+NEST QUERIES THE RETURN ONE ROW
+SELECT 문을 중첩하여 하위 쿼리에서 반환된 단일 행에 따라 기본 쿼리로 표시된 행을 제한한다.
+예를 들어 Smith와 동일한 직무를 가진 직원을 Smith가 어떤 직무를 가지고 있는지 모른채로 출력한다.
+
+SELECT column_name, [, column_name]
+FROM table1_name
+WHERE expression operator
+                 (SELECT column_name, [, column_name]
+                  FROM table1_name)
+
+SQL>  SELECT last_name, title
+    FROM e_emp
+    WHERE title =
+          (SELECT title
+           FROM e_emp
+           WHERE last_name = 'Smith');
+
+

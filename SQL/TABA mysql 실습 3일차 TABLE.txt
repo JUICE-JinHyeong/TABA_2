@@ -1,0 +1,62 @@
+S_EMP
+
+ EMPNO ENAME                JOB              MGR HIREDATE               SAL       COMM     DEPTNO
+---------- -------------------- --------- ---------- --------------- ---------- ---------- ----------
+      3790 GOODMAN                                   2023/03/22            2000
+      7369 SMITH                CLERK           7902 0080/12/09             800                    20
+      7499 ALLEN                SALESMAN        7698 0081/02/11            1600        300         30
+      7521 WARD                 SALESMAN        7698 0081/02/23            1250        500         30
+      7566 JONES                MANAGER         7839 0081/04/01            2975                    20
+      7654 MARTIN               SALESMAN        7698 0081/09/10            1250       1400         30
+      7698 BLAKE                MANAGER         7839 0081/05/01            2850                    30
+      7782 CLARK                MANAGER         7839 0081/05/09            2450                    10
+      7788 SCOTT                ANALYST         7566 0082/12/22            3000                    20
+      7839 KING                 PRESIDENT            0081/11/17            5000                    10
+      7844 TURNER               SALESMAN        7698 0081/08/21            1500          0         30
+      7876 ADAMS                CLERK           7788 0083/01/15            1100                    20
+      7900 JAMES                CLERK           7698 0081/12/11             950                    30
+      7902 FORD                 ANALYST         7566 0081/12/11            3000                    20
+      7934 MILLER               CLERK           7782 0082/01/11            1300                    10
+      9999 TABA                 STUDENT              0022/10/05            1500                    30
+
+COLUMN_NAME                                                                            TYPE               CONSTRAINT
+-------------------------------------------------------------------------------------- ------------------ --------------------------------------------
+EMPNO                                                                                  NUMBER(7)          PRIMARY KEY
+                                                                                                          NOT NULL
+ENAME                                                                                  VARCHAR(20)        NOT NULL
+JOB                                                                                    VARCHAR(9)
+MGR                                                                                    NUMBER(4)          REFERENTIAL
+HIREDATE                                                                               DATE
+SAL                                                                                    NUMBER(7)          NOT NULL
+COMM                                                                                   NUMBER(7)
+DEPTNO                                                                                 NUMBER(2)          REFERENTIAL
+
+
+INDEX_NAME                                                   TYPE                     COLUMN_NAME
+
+------------------------------------------------------------ ------------------------ ----------------------------------------------------------------
+S_EMP_ID_PK                                                  NORMAL                   EMPNO
+
+
+S_DEPT
+
+COLUMN_NAME                                                                            TYPE               CONSTRAINT
+-------------------------------------------------------------------------------------- ------------------ --------------------------------------------
+DEPTNO                                                                                 NUMBER(2)          PRIMARY KEY
+DNAME                                                                                  VARCHAR(14)
+LOC                                                                                    VARCHAR(13)
+
+
+INDEX_NAME                                                   TYPE                     COLUMN_NAME
+------------------------------------------------------------ ------------------------ ----------------------------------------------------------------
+S_DEPT_PK                                                    NORMAL                   DEPTNO
+
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+        50 FINANCE        MILPITAS
+        60 HR             SEOUL
