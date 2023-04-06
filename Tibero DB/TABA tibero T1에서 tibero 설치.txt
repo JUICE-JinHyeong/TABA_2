@@ -1,0 +1,224 @@
+#########C 드라이브 > TIBERO_USB 폴더 > s #############
+
+s 디렉토리에는 4개의 파일이 존재해야한다,
+
+1) 라이센스 
+
+이곳에  tibero에서 발급받은 라이센스 파일을 넣어둔다.
+	1. https://technet.tmaxsoft.com/ko/front/main/main.do 이동
+	2. 데모라이선스 신청 클릭
+	3. 제품명 tibero 버젼 7.0 Edition Standard 회사명 TABA 사용목적 교육
+	4. 라이센스는 이메일로 발급되며, 발급된 라이센스를 설명란 맨 위 디렉토리에 저장한다.
+
+
+2) PROFILE.txt
+
+PROFILE 텍스트 파일은 .bash_profile 파일을 변경하기 위해 필요한 텍스트 파일이다.
+제공된 해당 파일을 s 디렉토리에 저장한다.
+
+
+3) tibero7-bin-FS02-linux64_3.10-202626-20220624131800.tar 파일 (압축파일)
+
+C:\_TIBERO_USB\SW1\TiberoServer\Tibero7 경로에서 압축 파일을 s 파일로 이동시킨다.
+
+
+4) CREATE DATABASE
+
+.sql 파일이며 함께수록해둔다.
+
+
+
+
+###### T1 실행 #######
+
+
+
+<<<<<<<<1>>>>>>>>>
+
+
+1. cd /home/tibero/s  -> s 디렉토리로 이동한다.
+
+2. ls -l -> 파일이 4개 전부 있는지 확인한다.
+
+3. hostname -> 호스트 네임을 확인한다.
+
+4. cat /home/tibero/.bash_profile -> .bash_profile 파일을 확인한다.
+
+5. 이제 PROFILE 텍스트 파일과 .bash_profile 파일을 합쳐서 .bash_profile 파일을 수정할 것이다.
+
+6. vi /home/tibero/.bash_profile
+(ls -a 입력시 숨겨진 파일들도 볼 수 있다.)
+ 
+7. 아래 내용을 추가해주자.
+
+######## TIBERO ENV ########
+export TB_HOME=/tibero/tibero7
+export TB_SID=tibero
+export TB_PROF_DIR=$TB_HOME/bin/prof
+export PATH=.:$TB_HOME/bin:$TB_HOME/client/bin:~/tbinary/monitor:$PATH
+export LD_LIBRARY_PATH=$TB_HOME/lib:$TB_HOME/client/lib:$LD_LIBRARY_PATH
+export SHLIB_PATH=$LD_LIBRARY_PATH:$SHLIB_PATH
+export LIBPATH=$LD_LIBRARY_PATH:$LIBPATH
+
+######## TIBERO alias ########
+alias tbhome='cd $TB_HOME'
+alias tbbin='cd $TB_HOME/bin'
+alias tblog='cd $TB_HOME/instance/$TB_SID/log'
+alias tbcfg='cd $TB_HOME/config'
+alias tbcfgv='vi $TB_HOME/config/$TB_SID.tip'
+alias tbcli='cd ${TB_HOME}/client/config'
+alias tbcliv='vi ${TB_HOME}/client/config/tbdsn.tbr'
+alias tbcliv='vi ${TB_HOME}/client/config/tbnet_alias.tbr' 
+alias tbdata='cd $TB_HOME/tbdata'
+alias tbi='cd ~/tbinary'
+alias clean='tbdown clean'
+alias dba='tbsql sys/tibero'
+alias tm='cd ~/tbinary/monitor;monitor;cd -'
+
+8. cat /home/tibero/.bash_profile
+수정 내용 확인
+
+만일 
+
+# .bash_profile
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+# User specific environment and startup programs
+
+PATH=$PATH:$HOME/.local/bin:$HOME/bin
+
+export PATH
+
+stty erase
+
+### User ENV ###
+export PS1="[`whoami`@`hostname`:\$PWD]$ "
+
+### JAVA ENV
+export JAVA_HOME=/usr/java/default
+export JDK_HOME=$JAVA_HOME
+export PATH=$JAVA_HOME/bin:$PATH
+
+
+
+######## TIBERO ENV ########
+export TB_HOME=/tibero/tibero7
+export TB_SID=tibero
+export TB_PROF_DIR=$TB_HOME/bin/prof
+export PATH=.:$TB_HOME/bin:$TB_HOME/client/bin:~/tbinary/monitor:$PATH
+export LD_LIBRARY_PATH=$TB_HOME/lib:$TB_HOME/client/lib:$LD_LIBRARY_PATH
+export SHLIB_PATH=$LD_LIBRARY_PATH:$SHLIB_PATH
+export LIBPATH=$LD_LIBRARY_PATH:$LIBPATH
+######## TIBERO alias ########
+alias tbhome='cd $TB_HOME'
+alias tbbin='cd $TB_HOME/bin'
+alias tblog='cd $TB_HOME/instance/$TB_SID/log'
+alias tbcfg='cd $TB_HOME/config'
+alias tbcfgv='vi $TB_HOME/config/$TB_SID.tip'
+alias tbcli='cd ${TB_HOME}/client/config'
+alias tbcliv='vi ${TB_HOME}/client/config/tbdsn.tbr'
+alias tbcliv='vi ${TB_HOME}/client/config/tbnet_alias.tbr'
+alias tbdata='cd $TB_HOME/tbdata'
+alias tbi='cd ~/tbinary'
+alias clean='tbdown clean'
+alias dba='tbsql sys/tibero'
+alias tm='cd ~/tbinary/monitor;monitor;cd -'
+
+
+## 이 때 readonly라고 수정이 불가능할 수 있다.
+
+그렇다면 esc -> :q!로 나온 후 아래와 같이 실행한다.
+
+sudo su 
+root 권한으로 접속한다.
+
+똑같이 vi .bash_profile에 들어가 파일 내용을 수정한다.
+
+수정  후 esc -> wq로 저장한다.
+
+이후 리눅스 cmd로 나오면 exit를 입력하여 root 계정에서 탈출한다.
+
+9. source /home/tibero/.bash_profile
+프로필을 업데이트 해준다.
+
+<<<<<<<<2>>>>>>>>>
+
+
+라이센스 복사와 압축 파일 복사 과정이다.
+현재 라이센스와 압축 파일이 다른 곳에 저장되어 있기 때문에 옮겨주어야한다.
+
+
+1. cd /tibero
+먼저 루트 주소로 이동해서 tibero 디렉토리가 있는지 확인한다.
+
+2. cd /tibero/s
+다음으로 s 내부의 압축 폴더를 상위 디렉토리로 복사해준다.
+
+3. cp tibero7-bin*  /tibero
+4. cd ../
+
+압축 파일을 위의 경로에다가 복사한다.
+(여기서 *표시는 키보드의 tap키 의미이다. tap키는 현재까지 입력한 문자와 관련된 파일명을 뽑아준다)
+
+5. tar -xvzf tibero*
+
+압축을 풀어준다.
+
+6. cd s
+7. cp licens* $TB_HOME/license
+
+$TB_HOME = /tibero/tibero7
+
+license 디렉토리에 라이센스를 복사해준다.
+
+8.  ./gen_tip.sh
+위 파일을 실행시켜준다.
+
+9. tbboot nomount
+
+부팅을 실행
+미실행시 sql실행 후 I/O 뭐시기라고 오류가 뜬다
+
+10. tbsql sys/tibero
+tbsql 접속
+
+11. @/tibero/s/CREATE_DATABASE.sql
+sql을 실행시켜준다.
+이 때 파일명에 언더바(_) 가 없이 띄어쓰기만 되어있으면 
+윈도우의 C: > _TIBERO_USB > s
+로 들어가서 파일명을 수정해주자.
+
+12. 완료가 되면 database created라고 뜬다.
+
+13. q 
+sql 종료
+
+14. tbdown
+15. tbboot
+16. cd $TB_HOME/scripts
+17. sh system.sh
+(pdf 파일 참고)
+
+이후 설치를 시작하는데, 질문마다 Y라고 대답해주자
+
+18. 설치 완료후 tbdown
+오류나거나 안해도 상관없음
+19. tbboot
+20 tbsql sys/tibero
+
+21 select count(*) from DBA_OBJECTS;
+잘 되었는지 확인
+
+결과 
+  COUNT(*)
+----------
+      3145
+
+1 row selected.
+
+
+끝
