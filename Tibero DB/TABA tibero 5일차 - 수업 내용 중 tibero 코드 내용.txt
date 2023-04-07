@@ -1,0 +1,23 @@
+
+1) 접속 경로 추가
+
+vi /tibero/tibero7/client/config/tbdsn.tbr
+
+tibero=(
+    (INSTANCE=(HOST=localhost)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+)
+
+
+
+tibero2=(
+    (INSTANCE=(HOST=localhost)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+
+로 수정할 것
+
+

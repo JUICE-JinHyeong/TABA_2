@@ -38,7 +38,7 @@ C:\_TIBERO_USB\SW1\TiberoServer\Tibero7 경로에서 압축 파일을 s 파일�
 <<<<<<<<1>>>>>>>>>
 
 
-1. cd /home/tibero/s  -> s 디렉토리로 이동한다.
+1. cd /tibero/s  -> s 디렉토리로 이동한다.
 
 2. ls -l -> 파일이 4개 전부 있는지 확인한다.
 
@@ -204,6 +204,9 @@ sql 종료
 16. cd $TB_HOME/scripts
 17. sh system.sh
 (pdf 파일 참고)
+1번 pw tibero
+2번 pw syscat
+
 
 이후 설치를 시작하는데, 질문마다 Y라고 대답해주자
 
@@ -214,6 +217,9 @@ sql 종료
 
 21 select count(*) from DBA_OBJECTS;
 잘 되었는지 확인
+
+이 때 테이블 조회가 되지않는다면  17번을 다시 해보고 config 디렉토리에서 tbboot와 tbsql을 실행하자
+보통 17번의 패키지 설치가 제대로 되지않아 문제가 생긴다고한다,
 
 결과 
   COUNT(*)
