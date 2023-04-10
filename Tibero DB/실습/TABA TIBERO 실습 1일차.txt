@@ -1,0 +1,93 @@
+$TB_HOME/config/$TB_SID.tip 수정
+DB_NAME=tibero
+LISTENER_PORT=8629
+CONTROL_FILES="/tibero/tbdata/tibero/c1.ctl","/tibero/tbdata/tibero/c2.ctl"
+DB_CREATE_FILE_DEST=/tibero/tbdata/tibero
+LOG_ARCHIVE_DEST=/tibero/tbdata/tibero/arch
+MAX_SESSION_COUNT=20
+TOTAL_SHM_SIZE=600M
+MEMORY_TARGET=1
+
+
+1. 티베로 인스턴스
+	a. 인스턴스 이름
+		I. SELECT	 INSTANCE_NAME FROM  V$INSTANCE;
+	b. 리스터 포트
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'LISTENER_PORT';
+	c. 컨트롤파일 이름
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'CONTROLE_FILES';
+2. 티베로 데이터베이스
+	a. 데이터베이스 이름
+	 	I. SELECT DB_NAME FROM V$INSTANCE
+	b. 컨트롤 파일 이름
+		I. SELECT NAME FROM V$CONTROLEFILE;
+	c. 디레고리 지정 없이 파일(Datafile, redologfile) 이름만으로 생성시 사용하는 디렉토리
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'DB_CREATE_FILE_DEST';
+	d. 패스워드 파일이 생성되는 디렉토리
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'DB_CREATE_FILE_DEST';;
+	e. 아카이브로그 파일이 생성되는 디렉토리
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'LOG_ARCHIVE_DEST';
+	f. 현재 생성되어있는 아카이브로그 파일 목록
+		I. SELECT NAME FROM V$ARCHIVED_LOG;
+		II. SELECT NAME FROM V$ARCHIVED_DEST_FILES
+	j. 최대 DB 세션 갯수(워커스레드 개수, 동시에 실행 가능한 쿼리 개수)
+		I. SELECT VALUE FROM V$PARAMETERS WHERE NAME='MAX_SESSION_COUNT';
+		II. ps-ef | grep tbsvr에서 워커프로세스 개수를 조회하고, 그 개수고 * 10
+	k. 인스턴스에서  공유하는 전체 메모리 크기
+		i. SELECT VALUE FROM V$PARAMETERS WHERE NAME = 'MEMORY_TARGET';
+	l. 
+	m. 데이터파일 목록
+	n.
+	o.	
+		I. SELECT NAME FROM V$CONTROLFILE;
+	p. 리두로그 관련 로그모드 확인
+		I. SELECT LOG_MODE FROM V$DATABASE;
+
+
+
+테이블의 생성
+
+ Creating Tables
+ CREATE TABLE 권한 필요.
+ 다른 사용자의 스키마에서 생성시 CREATE ANY TABLE 권한이 필요
+
+CREATE TABLE PRODUCT (
+PROD_ID NUMBER(6),
+PROD_NAME VARCHAR(50),
+PROD_COST VARCHAR(30),
+PROD_PID NUMBER(6),
+PROD_DATE DATE
+)
+TABLESPACE MY_SPACE
+PCTFREE 5
+INITRANS 3;
+
+ TABLESPACE : 테이블을 생성하면서 이 테이블의 데이터가 저장될 저장소 지정.
+ PCTFREE : 테이블의 각 데이터 블록에 있는 공간 비율로 행을 갱신하기 위해 예약해 두는 공간의 비율(%.)
+ INITRANS : 테이블에 할당된 데이터 블록에 동시에 엑세스 가능한 트랜잭션의 초기값
+
+ALTER TABLE EMP PCTFREE 10;
+
+
+
+
+
+SQL 실습
+
+LS USER
+
+CONNECT TIBERO/TMAX
+
+유저가 소유하고 있는 테이블 확인
+DESC USER_TABLES;
+
+
+
+
+COL TABLE_NAME FOR A15
+COL TABLESPACE_NAME FOR A15
+SELECT TABLE_NAME, TABLESPACE_NAME FROM USER_TABLES;
+
+유저 컬럼 확인
+
+DESC USER_TBL_COLUMNS

@@ -1,0 +1,87 @@
+SW1 ZIP 파일 해제
+SW2 JDK 실행
+
+설치
+
+sw1 zip 파일의 티베로 스튜디오 실행
+
+
+무슨 창이 뜸
+
+Alias	: VM_SYS (아무거나 칠 것)
+IP	: 192.168.56.101 (putty에서 tibero와 연결된 ip 입력)
+port	: 8629
+User	: sys (tibero에 등록된 유저)
+Password : tibero (tibero에 등록된 sys 유저의 비밀번호)
+DB name  : tibero
+
+이 때 유저들은 tibero에서 사전에 등록을 해둬야 사용이 가능하다.
+
+
+STUDIO에서 사용한 테이블
+
+CREATE TABLE PRODUCT (
+PROD_ID NUMBER(6),
+PROD_NAME VARCHAR(50),
+PROD_COST VARCHAR(30),
+PROD_PID NUMBER(6),
+PROD_DATE DATE
+)
+
+TBSQL에 입력된 정보가 STUDIO 와 연동되어 사용할 수 있다.
+---------------------------------------------------------------------------------------
+사용자 생성
+− 사용자를 새로 생성하거나 변경 혹은 삭제하기 위해서는 DBA권한을 가진 사용자로 접속해야 함.
+− Tibero에서는 기본적으로 SYS라는 DBA 사용자를 제공
+− 사용자 생성은 아래와 같이 CREATE USER 명령을 사용하여 할 수 있다
+
+CREATE USER tibero
+IDENTIFIED BY tmax
+DEFAULT TABLESPACE MY_SPACE;
+
+▪ 사용자를 생성 후 DB에 접속할 수 있는 CONNECT 권한을 부여하지 않으면 DB에 접속할 수 없다.
+▪ 만약 Default tablespace 를 지정하지 않으면 database 의 default tablespace 로 object 가 저장이 되고, Database의 default tablespace 가 지정되지 않았다면 USR tablespace 로 저장이 됩니다
+
+예) 현재 유저의 Default tablespace 확인.
+ select default_tablespace from user_users;
+예) ‘tiberouser01’ 유저의 default tablespace 를 ts_tiberouser 로 변경.
+ alter user tiberouser01 default tablespace ts_tiberouser;
+예) emp 테이블의 tablespace 를 ts_tiberouser 로 변경.
+ alter table emp move tablespace ts_tiberouser;
+
+ 사용자 정보 변경
+− 비밀번호 변경
+	ALTER USER tibero
+	IDENTIFIED BY tmax123;
+− 사용자 기본 테이블스페이스 변경
+	ALTER USER tibero
+	DEFAULT TABLESPACE TMAX_DAT
+ 사용자 삭제
+	SQL>DROP USER park CASCADE; 
+
+사용자 정보 조회
+− 사용자에 대한 일반적인 관리에 도움을 주기 위해 아래와 같은 시스템 뷰 제공. 뷰 설명
+ALL_USERS •데이터베이스 내의 모든 사용자에 대한 기본적인 정보
+DBA_USERS •데이터베이스 내의 모든 사용자에 대한 자세한 정보
+USER_USERS •현재 사용자에 대한 정보
+
+SELECT*FROM ALL_USERS;
+
+
+---------------------------------------------------------------------------------------
+
+INSERT INTO PRODUCT(PROD_ID)
+SELECT	1
+FROM	DUAL
+CONNECT BY LEVEL <= 1000000;
+
+COMMIT;
+
+
+-------------------------------------------------------------------------------------
+
+
+created index(사진 참고)
+
+반드시 commit을 진행하고 할 것
+
