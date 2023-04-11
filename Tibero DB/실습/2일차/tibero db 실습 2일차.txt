@@ -1,0 +1,361 @@
+CREATE TABLESPACE my_space
+DATAFILE '/tibero/tibero7/tbdata/my_file001.dtf' SIZE 50M
+AUTOEXTEND ON NEXT 10M MAXSIZE 3G
+EXTENT MANAGEMENT LOCAL
+UNIFORM SIZE 256K;
+
+------------------------
+
+
+
+C:\_TIBERO_USB\SW1\TiberoStudio\TiberoStudio2_20220715_win32.win32.x86_64
+
+tiberostudio.ini
+
+tiberostudio 설정을 바꾸는 파일
+
+-isDBA=false -> true
+
+이후 tiberostudio를 재시작하면 상위 탭에 DBA가 생성된 것을 알 수 있다.
+
+
+----------------------
+
+tiberostudio
+window - preference -> 환경설정
+Skip NSL settings -> 환경설정에서 지정한 형식대로 date를 포멧팅 할 것인지 여부
+
+Editor Options - Editor Settings -> sql 입력 페이지 설정
+	       - Result Table Setting -> sql 출력 페이지 설정
+			- Show total Count 체크
+그 밖에 폰트 크기설정 들이 존재한다.
+창 더블 클릭시 크기를 조정할 수 있다
+
+---------------------
+좌측 user란 돋보기 : 내가 찾고자하는 객체 검색
+
+---------------------
+sql insert table
+sql 입력 테이블
+
+왼쪽부터 1~5개의 아이콘은 모두 sql을 실행하는 버튼 (각 기능이 조금씩 다르다)
+
+6번째 (show excusition plan) 
+7번째 (sql trace) sql log 확인
+8번째 달력 표시(Template) -> 템플릿 확인 가능
+9번째 (sql history) sql 실행 history
+
+SELECT * FROM DBA_OBJECTS
+
+---------------------
+sql result table
+sql 결과 테이블
+
+
+순서대로 
+
+조건 및 정렬조건 추가
+컬럼 필터링(엑셀과 동일)
+엑셀로 저장
+텍스트 파일로 저장
+
+------------------------------------------------------
+
+ SQL Editor
+• 일반적인 SQL 문장 및 입력, 편집, 실행
+• DML SQL 문장의 Execution Plan 보기
+• DBMS Output 보기 기능
+• 성능향상을 위한 Partial Data Fetch 기능
+• Cell Editor 편집기능
+• GUI를 통한 Commit/Rollback
+• Open File/Save As… 기능
+• Describe Object(Table, View, Synonym) 기능
+• 단일 문장 수행 기능
+• 엑셀파일 저장기능, 컬럼 필터링, 정렬 기능
+• SQL Keyword/SQL Function/SQL
+Template/Table name Completion 기능
+
+
+
+ SQL Editor
+• 일반적인 SQL 문장 및 입력, 편집, 실행
+• DML SQL 문장의 Execution Plan 보기
+• DBMS Output 보기 기능
+• 성능향상을 위한 Partial Data Fetch 기능
+• Cell Editor 편집기능
+• GUI를 통한 Commit/Rollback
+• Open File/Save As… 기능
+• Describe Object(Table, View, Synonym) 기능
+• 단일 문장 수행 기능
+• 엑셀파일 저장기능, 컬럼 필터링, 정렬 기능
+• SQL Keyword/SQL Function/SQL
+Template/Table name Completion 기능
+
+
+
+ PSM Editor
+• PL/SQL 문장 편집 및 컴파일 기능
+• 컴파일 에러정보 출력
+• PL/SQL Hierarchy 정보 제공
+• Open File/Save As… 기능
+
+
+
+Schema Tree Browser
+• 스키마 객체의 정보를 트리 형태로 조회
+• 스키마 객체를 선택한 뒤 오른쪽 마우스
+버튼을 클릭하면 컨텍스트 메뉴가 나타난
+다
+• 컨텍스트 메뉴를 사용하면 별도의 화면에
+서 스키마 객체를 생성하고, 수정, 삭제할
+수 있다. 
+• PL/SQL의 PSM Editor과의 연동 기능
+
+
+ Schema Object Detail
+• Schema Tree Browser에서 스키마 객체
+를 선택하면, View 영역의 Schema 
+Object Detail 화면에서 스키마 객체의
+세부 정보를 볼 수 있다
+• 선택한 스키마 종류에 따라 탭이 다르게
+구성되며, 선택한 스키마 객체명이
+Schema Object Detail의 Title 이름이 된
+다
+
+
+
+Export / Import
+• DB 구조와 데이터를 binary 파일로
+Export 및 Import 수행
+
+
+-------------------------------------
+tbsql
+
+
+
+-- SYS USER 로 접속하여 실행함.
+CONNECT SYS/TIBERO
+
+-- 1. DBA권한으로 접속하여 SCOTT USER를 생성 한다. 
+CREATE USER scott IDENTIFIED BY tiger
+DEFAULT TABLESPACE usr
+TEMPORARY TABLESPACE temp;
+  
+-- 2. 권한 부여
+GRANT connect, resource TO scott;
+ 
+-- 3. SCOTT USER로 접속해서 스크립트를 실행. 
+CONN scott/tiger
+
+-- 4. SCOTT 스키마에 5개 테이블 생성과 데이터 입력. 
+DROP TABLE EMP;
+DROP TABLE DEPT;
+DROP TABLE BONUS;
+DROP TABLE SALGRADE;
+DROP TABLE DUMMY;
+ 
+CREATE TABLE EMP
+       (EMPNO NUMBER(4) NOT NULL,
+        ENAME VARCHAR2(10),
+        JOB VARCHAR2(9),
+        MGR NUMBER(4),
+        HIREDATE DATE,
+        SAL NUMBER(7, 2),
+        COMM NUMBER(7, 2),
+        DEPTNO NUMBER(2));
+ 
+INSERT INTO EMP VALUES
+        (7369, 'SMITH',  'CLERK',     7902,
+        sysdate,  800, NULL, 20);
+         
+INSERT INTO EMP VALUES
+        (7499, 'ALLEN',  'SALESMAN',  7698,
+        sysdate, 1600,  300, 30);
+         
+INSERT INTO EMP VALUES
+        (7521, 'WARD',   'SALESMAN',  7698,
+        sysdate, 1250,  500, 30);
+         
+INSERT INTO EMP VALUES
+        (7566, 'JONES',  'MANAGER',   7839,
+        sysdate,  2975, NULL, 20);
+         
+INSERT INTO EMP VALUES
+        (7654, 'MARTIN', 'SALESMAN',  7698,
+        sysdate, 1250, 1400, 30);
+         
+INSERT INTO EMP VALUES
+        (7698, 'BLAKE',  'MANAGER',   7839,
+        sysdate,  2850, NULL, 30);
+         
+INSERT INTO EMP VALUES
+        (7782, 'CLARK',  'MANAGER',   7839,
+        sysdate,  2450, NULL, 10);
+INSERT INTO EMP VALUES
+        (7788, 'SCOTT',  'ANALYST',   7566,
+        sysdate, 3000, NULL, 20);
+         
+INSERT INTO EMP VALUES
+        (7839, 'KING',   'PRESIDENT', NULL,
+        sysdate, 5000, NULL, 10);
+         
+INSERT INTO EMP VALUES
+        (7844, 'TURNER', 'SALESMAN',  7698,
+        sysdate,  1500,    0, 30);
+         
+INSERT INTO EMP VALUES
+        (7876, 'ADAMS',  'CLERK',     7788,
+        sysdate, 1100, NULL, 20);
+         
+INSERT INTO EMP VALUES
+        (7900, 'JAMES',  'CLERK',     7698,
+        sysdate,   950, NULL, 30);
+         
+INSERT INTO EMP VALUES
+        (7902, 'FORD',   'ANALYST',   7566,
+        sysdate,  3000, NULL, 20);
+         
+INSERT INTO EMP VALUES
+        (7934, 'MILLER', 'CLERK',     7782,
+        sysdate, 1300, NULL, 10);
+ 
+CREATE TABLE DEPT
+       (DEPTNO NUMBER(2),
+        DNAME VARCHAR2(14),
+        LOC VARCHAR2(13) );
+ 
+INSERT INTO DEPT VALUES (10, 'ACCOUNTING', 'NEW YORK');
+INSERT INTO DEPT VALUES (20, 'RESEARCH',   'DALLAS');
+INSERT INTO DEPT VALUES (30, 'SALES',      'CHICAGO');
+INSERT INTO DEPT VALUES (40, 'OPERATIONS', 'BOSTON');
+ 
+CREATE TABLE BONUS
+        (ENAME VARCHAR2(10),
+         JOB   VARCHAR2(9),
+         SAL   NUMBER,
+         COMM  NUMBER);
+ 
+CREATE TABLE SALGRADE
+        (GRADE NUMBER,
+         LOSAL NUMBER,
+         HISAL NUMBER);
+ 
+INSERT INTO SALGRADE VALUES (1,  700, 1200);
+INSERT INTO SALGRADE VALUES (2, 1201, 1400);
+INSERT INTO SALGRADE VALUES (3, 1401, 2000);
+INSERT INTO SALGRADE VALUES (4, 2001, 3000);
+INSERT INTO SALGRADE VALUES (5, 3001, 9999);
+ 
+CREATE TABLE DUMMY
+        (DUMMY NUMBER);
+ 
+INSERT INTO DUMMY VALUES (0);
+ 
+COMMIT;
+
+
+----------------
+
+Tool - export (binary파일 생성) 
+
+Export file(경로지정) 
+Scope(테이블 혹은 DB 선택)
+Export Contents (옵션 추가 강의에선 compress 빼고 전부 체크)
+Log file(로그 파일생성)
+Show DDL Scripts (테이블 확인 강의에선 체크)
+
+
+아래는 export 실행 후 첫 줄 내용이다,
+
+Export username=SYS password=****** ip=192.168.56.101 port=8629 sid=tibero file='C:\Users\Admin\Documents\tibero_studio\export\default.dat' log='C:\Users\Admin\Documents\tibero_studio\export\default.log.log' full=y script=y thread_cnt=1 parallel_degree=0 LOGDIR=log/ 
+
+
+
+-------------------
+
+TBSQL
+
+
+LS USER; 현재 사용중인 유저 확인
+CONN USER_NAME ; 명시된 유저로 접속
+
+CREATE TABLE TIBERO.DEPT AS
+SELECT * FROM SCOTT.DEPT;
+ 
+SCOTT에 생성되어있는 DEPT 테이블을 현재 사용중인 유저 DB에 복사
+
+TRUNCATE TABLE SCOTT.DEPT; 
+SCOTT의 DEPT 테이블 삭제 -> DELETE와 비슷하다
+
+TRUNCATE : 테이블을 저장 공간과 함께 삭제
+DELETE     : 테이블의 데이터를 삭제 (공간은 남아있음)
+
+
+
+
+-----------------
+
+TOOL - IMPORT 
+Import File - EXPORT 해둔 .DAT파일을 업로드한다.
+
+Scope (무엇을 사용할지 결정) 강의에서는 User/Table 선택
+
+User - SCOTT
+Table - DEPT
+
+Ignore the "schema object already exists" 체크
+(미리 존재하는 객체에 대한 에러 무시)
+
+-> 이미 dept 테이블이 존재하기 때문에 에러가 발생하는데, 이를 무시하고 impot 한다.
+
+그리고 실행(IMPORT)
+
+
+Import 첫 줄
+
+Import username=TIBERO password=******* ip=192.168.56.101 port=8629 sid=tibero file='C:\Users\Admin\Documents\tibero_studio\export\default.dat' user="SCOTT" table="DEPT" ignore=y thread_cnt=1 io_buf_size=16M bind_buf_size=1M LOGDIR=log/ 
+
+
+
+-------------------------
+
+tbsql
+
+
+CONN SCOTT/TIGER 
+SCOTT으로 사용자 변경
+
+LS TABLE 
+전체 테이블 확인
+
+DROP TABLE DEPT
+DEPT 테이블 삭제
+
+-------------------------
+
+TBERO STUDIO 
+
+다시 IMPORT(위와 똑같이)
+
+이렇게 하면 TBSQL에서 DROP 하였던 DEPT가 다시 생성되어있는 것을 확인할 수 있다.
+
+
+이번에는 컬럼 2개를 삭제하고 복구해보자.
+
+TRUNCATE TABLE DEPT;
+TRUNCATE TABLE EMP;
+
+IMPORT에서 컬럼 추가해서 다시 IMPORT 하면 실행된다.
+
+
+TOOL - FILE LOAD
+
+OPTIONS 탭
+USER EXCEL FILE : 엑셀 파일로 로드 아니면 텍스트 파일
+
+UNLOAD 탭 - Tables - SCOTT.DEPT 
+File 저장 경로 설정
+
+완료 후 Start Unloading
+
