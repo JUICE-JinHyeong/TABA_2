@@ -359,3 +359,131 @@ File 저장 경로 설정
 
 완료 후 Start Unloading
 
+
+-----------------------------
+
+다음으로 DEPT TABLE의 내용을 삭제하고 텍스트 파일로 업로드 해보기
+
+(TBSQL)
+TRUNCATE TABLE DEPT;
+
+후 다시 TIBERO STUDIO
+
+TOOL - LOAD/UNLOAD
+
+LOAD 탭
+Source file : 데이터를 가져올 파일
+Destination table : 가져온 데이터를 저장할 테이블
+
+아래는 옵션들
+
+Start Loading 
+COLUMNS List Editor 가 나타난다. -> 칼럼 순서 정하기
+*이 때 왼쪽(저장된 테이블의 칼럼명) 과 오른쪽(가져올 파일의 칼럼) 이 다를 경우 문제가 생기니 똑같이 맞춰주자.
+
+
+
+
+--------------------------------
+
+tbsql q
+
+tibero 에서 export import 해보기
+
+tbexport
+tbimport
+
+mkdir expimp
+
+tbexport
+
+tbexport 접속 정보 항목 5가지, full=y script = y
+
+tbexport IP = localhost  PORT = 8629 SID = tibero USERNAME = sys  PASSWORD = tibero full = y script = y
+
+ls -al 모든 파일 보기
+
+
+이후 tbsql scott/tiger
+
+TRUNCATE TABLE DEPT;
+SELECT * FROM DEPT;
+
+삭제 후 다시 tibero 접속
+
+q (sql 나가기)
+
+tbexport IP = localhost  PORT = 8629 SID = tibero USERNAME = sys  PASSWORD = tibero full = y script = y
+오류가 생김 -> 이미 dept가 존재해서 파일명이 겹치기에 문제가 생긴다,
+
+
+-------------------
+
+LS USER
+CONN sys/tibero
+
+CREATE TABLE EMP AS SELECT * FROM SCOTT.EMP
+
+q로 sql 종료
+tibero로 접속
+
+
+----------------
+unload 방법
+중간에 놓침
+
+mkdir load
+cd load
+/home/tibero/load
+
+tbsql scott/tiger
+
+EXPORT QUERY 'emp.csv'
+
+
+truncate table emp;
+
+
+
+-------------
+
+tbloader
+tbloader userid=userid/passwd@dbname control=sample.ctl bindsize=1000000
+
+ctl 파일을 불러오기 (/home/tibero/load)
+tbloader userid=userid = scott/tiger@tibero control=emp.ctl bindsize=1000000
+
+
+
+-------------
+
+mkdir load2
+
+1. vi로 example.ctl 파일과 example.dat 파일 생성
+
+2. tbloader
+tbloader userid=userid = scott/tiger@tibero control=emp.ctl bindsize=1000000
+
+3. cat으로 확인
+cat example.dat
+데이터 확인
+cat example.bad
+로드 실패한 데이터 확인
+
+4. SELECT COUNT(*) FROM EMP;
+
+cp example.dat example.dat_01
+cp example.bad example.dat
+cat example.dat
+tbloader userid=userid = scott/tiger@tibero control=emp.ctl bindsize=1000000
+
+SELECT COUNT(*) FROM EMP;
+SELECT ENAME, JOB FROM EMP;
+
+
+
+
+
+
+
+
