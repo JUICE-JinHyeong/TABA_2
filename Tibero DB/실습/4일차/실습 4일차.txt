@@ -1,0 +1,226 @@
+T-up
+
+https://technet.tmaxsoft.com/ko/front/download/findDownloadList.do?cmProductCode=0301
+T-up 다운로드
+압축해제
+
+T-Up.x86_64 실행
+ojdbc6(C:\_TIBERO_USB\SW1\T-UP) 파일 lib폴더에 옮겨두기
+
+
+create public database link public_tibero using 'remote_2';
+drop public database link public_tibero;
+
+적다 말음 (놓침)
+create database link remote_tibero connect to user1
+identified by '';
+
+오늘 수업 pdf
+file:///C:/_TIBERO_USB/DOC2/TIFP001_DB_LINK_2.1.2.pdf
+
+sourde database 창
+Oracle
+
+
+gen_tip.sh 에서 tibero2 설정? 필요 
+수업 속도가 너무 빨라서 따라가기 힘듦
+
+
+tbsql
+
+tbsql tibero/tmax
+select * from usesr_db_links;
+
+
+tbsql 
+CREATE DATABASLE LINK tlink CONNECT TO tibero IDENTIFIED BY 'tmax' USING 'tmax' USING 'tibero2';
+DROP DATABASE LINK tlink;
+
+CREATE DATABASE LINK tlink_error CONNECT TO tibero IDENTIFIED BY 'tmax' USING 'tibero2';
+
+
+1) 접속 경로 추가
+
+vi /tibero/tibero7/client/config/tbdsn.tbr
+
+tibero=(
+    (INSTANCE=(HOST=localhost)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+)
+
+
+
+tibero2=(
+    (INSTANCE=(HOST=localhost)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+
+로 수정할 것
+
+
+
+desc user_db_links
+
+COL OWNER FOR A10
+COL DB_LINK FOR A10
+COL USERNAME FOR A10
+COL HOST FOR A10
+COL CREATED FOR A10
+COL DB_LINK FOR A12
+
+SELECT * FROM USER_DB_LINKS
+
+SELECT DB_NAME FROM V$INSTANCE@TLINKL	;
+
+
+CREATE TABLE EMP_LOCAL AS 
+SELECT * FROM EMP@LINK
+WHERE ROWNUM < 1;
+
+INSERT INTO EMP_LOCAL
+SELECT * FROM EMP@TLINK;
+
+COMMIT;
+
+
+SELECT COUNT(*) FROM EMP_LOCAL;
+
+-----------------------------------
+
+backup
+
+Backup 및 recovery Introduction
+−여러 가지 유형의 장애로부터 데이터베이스를 보호
+MTBF (Mean Time Between Failure)를 증가시키고 MTTR (Mean Time Between Recover)를 감소
+−시스템 장애 발생시 복원을 하거나, 시스템 작동을 유지하기 위한 절차 또는 기법
+−관리자는 시스템 장애시 발생할 손실을 최소화하고 복구 가능한 상태로 데이터베이스를 운용해야 함.
+최소한 한 달에 한번 데이터베이스 전체 백업
+하루에 한번씩 Export 백업 권장
+−데이터베이스 관리자는 백업에 대한 정책을 수립하고 꼭 필요한 데이터를 최소한의 양으로 백업
+백업은 DBA의 주요 역할 중 가장 주의를 기울여야 함
+−“RECOVERY에 실패한 DBA는 용서할 수 있지만, BACKUP을 실패한 DBA는 용서할 수 없다.”
+−백업이 정상적으로 수행되었는지 주기적으로 검증하는 것을 권장한다
+
+
+
+여러가지 유형의 장애
+
+
+명령문의 실패
+	−테이블의 제약 조건에 위배되는 데이터를 insert
+	−권한의 부족	
+	−테이블 생성시나 데이터 변경시 테이블스페이스의 공간이 부족한 경우
+
+사용자 프로세스의 실패
+	−비정상적인 종료로 인한 사용자 프로세스의 실패가 대부분
+	−Tibero의 monitor process가 비정상적인 종료를 감지하고 수행중인 트랜잭션 등은 롤백
+
+  사용자로 인한 장애
+	−장애 발생 상황
+		DROP TABLE
+		TRUNCATE TABLE
+		DELETE FROM & COMMIT
+		잘못된 update & COMMIT
+	−해결 방안
+		사용자에 대한 교육 실시
+		백업에서 복구
+		Export 받은 파일에서 테이블을 import
+Time-based 불완전 복구
+
+Instance fail
+	−정전, CPU나 memory fault, background process의 비정상적인 종류가 대부분
+	−복구
+		특별한 복구 작업이 필요하지 않음
+		tbboot을 통해 DBMS를 기동하면 자동으로 복구됨
+		로그 등을 참고하여 원인 분석
+
+Media fail
+	−데이터파일이 저장된 하드 디스크의 장애
+	−데이터 파일의 삭제
+	0−정해진 복구 전략에 따라 복구 절차가 필요
+
+Backup 및 Recovery의 전략 수립
+
+
+업무적인 요구 사항
+	−MTBF (Mean Time Between Failure)를 증가시키고 MTTR (Mean Time To Recover)를 감소
+운영 요구 사항
+	−24*365 운영, 백업 테스트 및 검증, 데이터베이스의 변경, 백업 데이터의 보관 장소 등
+기술적 고려 사항
+	−하드웨어, 소프트웨어의 구성, 백업 주기 결정을 위한 트랜잭션 주기, 데이터의 양 등
+경영진 합의
+	−경영진에서 기대하는 시스템의 가용성, 백업 및 복구 절차에 대한 이해, 백업을 위한 리소스 확보 
+
+
+Backup과 Recovery 관련 Tibero 동작 방식의 이해
+
+Transaction Durability
+		−Committed Transaction MUST Survive failures (Recoverable)
+Logging
+		−Redo Log Buffer : TSM에 redo 데이터를 저장하기 위한 영역
+		−Redo Log File : recovery를 위해 가장 중요한 파일
+		−Archive : archive log mode시 redo logfile을 별도의 위치에 backup
+관련된 background process
+		−DBWR, RCWP ( tibero 6 FS07 ~ )
+		−DBWR, RECO ( tibero 6 ~ tibero 6 FS06 )
+		−LGWR, DBWR, CKPT, LARC ( ~ tibero 5 
+
+
+Redo 저장 대상 범위
+	−Physical Logging
+		▪ 수정이 일어날 때마다 해당 block을 통째로 남긴다. 
+		▪ 바뀔 때마다 block size 만큼의 로그가 남아 많은 양의 유지해야 한다.
+	−Logical Logging
+		▪ update, delete 같은 operation을 log에 남기는 방법이다.
+		▪ 여러 physical block들에 대한 수정을 하더라도 operation만 기록되어 logging 양이 적다. 
+		▪ 하지만, change가 반드시 순서대로 apply되야 한다. recovery 때 log apply가 어렵다. 
+	−Physiological Logging
+		▪ physical logging과 logical logging의 장점을 합친 형태
+		▪ block의 physical change를 기록하는 change vector 들로 구성된 redo record 들로 이루어진다. 
+		▪ change vector는 atomic block change 이며, redo record는 atomic database change
+
+
+
+Redo 저장 시 일어나는 일들
+	−Page fix rule
+		▪ block에 대한 수정작업이 일어나기 전에 buffer에 대한 Lock을 잡는다. 
+		▪ 실제 data buffer를 수정하기 전에 Redo Record를 Generation한다.
+	−WAL ( Write Ahead Logging )
+		▪ database buffer가 변경되기 전에 redo record 가 먼저 log buffer에 기록된다.
+		▪ DBWR가 dirty buffer를 disk에 write하기 전에 Redo Record가 먼저 log buffer의 필요한 redo record를 log file에 먼저 기록한다.
+	−Log force at commit
+		▪ Commit 발생시 log buffer의 redo entry를 모두 log file에 write한다. 
+		▪ Commit된 데이터의 보장.
+	−Online log switch
+		▪ Online Log중 다음의 조건을 만족하는 Log file로 Switching 된다.
+			1. Not active
+			2. Check point complete
+			3. Archiving not required
+
+tibero
+mkdir /tibero/s/off
+
+tbsql
+SELECT NAME FROM V$CONTROLFILE;
+/tibero/tibero7/database/tibero/c1.ctl
+
+tibero
+tbdown immediate
+cp /tibero/tibero7/database/tibero/*.ctl  /tibero/s/off
+
+
+tbboot
+rm /tibero/tibero7/database/tibero/c1.ctl
+
+
+select * from v$datafile where file#=2;
+
+tbdown immediate
+ls -l /tibero/tbdata/tibero/
+rm 으로 모든 파일 삭제
+
+
+cp /tibero/s/off/*.dtf /tibero/tbdata/tibero
