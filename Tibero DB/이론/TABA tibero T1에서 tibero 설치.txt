@@ -130,6 +130,8 @@ alias clean='tbdown clean'
 alias dba='tbsql sys/tibero'
 alias tm='cd ~/tbinary/monitor;monitor;cd -'
 
+이후 
+$ source ~/.bash_profile
 
 ## 이 때 readonly라고 수정이 불가능할 수 있다.
 
@@ -176,6 +178,8 @@ root 권한으로 접속한다.
 $TB_HOME = /tibero/tibero7
 
 license 디렉토리에 라이센스를 복사해준다.
+
+[tibero@T1:/tibero/tibero7]$ cd config
 
 8.  ./gen_tip.sh
 위 파일을 실행시켜준다.

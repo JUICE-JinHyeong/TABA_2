@@ -1,0 +1,42 @@
+list 
+append() 리스트 항목 추가
+extend() 리스트 + 리스트
+insert(index, element) 특정한 위치에 리스트 항목 추가
+
+arr = [1,2,3]
+arr.insert(1,4)
+
+-> [1,4,2,3]
+
+
+정규표현식
+
+import re
+p = re.compile('[0-9]')
+m = p.match('조진웅(1편)')
+print(m)
+int(p.findall('조진웅(1편)')[0])
+
+
+class
+
+class cls :
+	count = 0
+	self.width (인스턴스 변수)
+
+	def func(self , ) :
+		value
+
+	@staticmethod 
+	def staticfunc() :
+		value
+	@classmethod
+	def classfunc(cls , )
+
+cls a -> 인스턴스
+a.width
+a.func()
+
+cls.count (클래스 변수)
+cls.staticfunc()  
+cls.classfunc() 
