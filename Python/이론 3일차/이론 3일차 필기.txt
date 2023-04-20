@@ -1,0 +1,214 @@
+p 107
+
+Deep learning
+
+Convolutional Neural Network (CNN)
+Locality가 존재하는 데이터에 적용
+이미지의 경우 인접 픽셀은 대개 높은 연관성을 가진다. 
+
+Auto-Encoder
+
+데이터에서 feature를 추출할 때 사용
+Unsupervised 방식으로 학습
+잡음에 강하면서 대상을 잘 설명할 수 있는 feature 추출
+
+Recurrent Neural Network (RNN)
+
+데이터 내에 존재하는 dynamic을 다룰 때 사용
+번역
+날씨 주가 등의 예측
+
+- 주목할 만한 최근의 연구 결과
+
+번역기
+
+System : Bidiging the Gap between Human and Machine Translation
+단순 1대1 변환이 아닌, 본문에 대한 의미 추론 과정을 거친 후 영문으로 작성
+
+System : Bridging the Gap between Human and Machine Translation
+Auto-Encoder + Recurrent Neural Network
+
+
+Semantic Segmentation
+
+Learning deconvolution network for semantic segmentation
+이미지 내 존재하는 물체별로 색칠
+
+Learning deconvolution network for semantic segmentation
+Convolutional Nural Network (CNN)
+Auto - Encoder와 비슷한 구조이나 Auto-Encoder는 아님
+
+Learning deconvolution network for semantic segmentation
+FCN , DeppLab , U-Net , ReSeg
+
+Image Generation
+
+Pixel Level Domain Transfer
+입력 이미지에서 사람이 입고 있는 옷만 따로 그리기
+Pixel Level Domain Transfer
+Auto-Encoder + Convolutional Nural Network (CNN)
+
+Variational Auto-Encoder
+Deep Feature Consistent Variational Autoencoder
+
+Generative Adversairal Network
+Competition between Genrator and Disriminator
+
+Weaklyo-supervised Localization
+Class Activation Map
+
+
+Super Resolution
+Deep Learning Based Method
+SRCNN FSRCNN SRGAN ESRGAN
+
+image Captioning with Semantic Attention
+
+image Detection Based on Deep Learning
+RCNN, Fast RCNN, Faster RCNN, SPP Net, Yolo, SDD, Attention Net
+
+
+
+------------
+
+p 88
+
+딥러닝 설계 요소
+
+딥러닝 Depep Nural Network , DNN
+
+DNN은 앞장에서 학습한 MLP(다층 퍼셉트론)에서 은닉층의 개수를 증가시킨 것
+딥이라는 용어가 은닉층이 깊다는 의미
+최근에 딥러닝은 컴퓨터 시각, 음성 인식 , 자연어 처리, 소셜 네트워크 필터링, 기계 번역 등에 적용되어서 인간 전문가에 필적하는 결과
+
+MLP
+입력 - 특징 추출 - 분류 - 출력
+
+심층신경망 (DNN)
+입력 - 특징 추출 + 분류 - 출력
+
+
+딥러닝 학습
+
+ 딥러닝 학습은 인공신경망 모델이 입력 데이터를 학습하여 일반화 성능을 향상시키는 과정입니다.
+
+이 과정에서, 학습 데이터를 사용하여 모델의 가중치(weight)와 편향(bias)을 조정하여 손실 함수(loss function)를 최소화하려고 합니다. 이는 모델이 입력 데이터를 올바르게 분류하거나 원하는 출력을 생성할 수 있도록 합니다.
+
+딥러닝 모델은 일반적으로 역전파(backpropagation) 알고리즘을 사용하여 가중치와 편향을 업데이트합니다. 역전파 알고리즘은 출력 값과 기대 출력 값 간의 차이에 따라 각 레이어에서의 오차를 계산하고, 그 오차를 사용하여 각 레이어의 가중치와 편향을 조정합니다.
+
+딥러닝 모델은 많은 수의 파라미터를 가지므로 대규모 데이터 세트에서 학습하는 것이 일반적입니다. 학습이 끝나면 모델은 새로운 입력 데이터에 대해 예측을 수행할 수 있습니다.
+
+손실 함수
+
+손실 함수(loss function)는 머신 러닝에서 모델의 예측값과 실제값 간의 차이를 측정하는 함수입니다. 모델이 예측한 결과가 실제 결과와 얼마나 다른지를 계산하여 모델을 학습시키는 데 사용됩니다.
+
+손실 함수는 모델이 학습하는 목표를 정의합니다. 일반적으로 모델은 손실 함수의 값을 최소화하도록 학습됩니다. 손실 함수의 값이 작을수록 모델의 성능이 좋습니다.
+
+예를 들어, 분류 문제에서는 모델이 예측한 클래스와 실제 클래스 간의 차이를 측정하는 교차 엔트로피 손실 함수(cross-entropy loss function)가 일반적으로 사용됩니다. 회귀 문제에서는 모델이 예측한 값과 실제 값 간의 차이를 측정하는 평균 제곱 오차(mean squared error) 또는 평균 절대 오차(mean absolute error)와 같은 손실 함수가 사용됩니다.
+
+손실 함수를 선택하는 것은 모델의 학습 결과에 큰 영향을 미칩니다. 적절한 손실 함수를 선택하면 모델의 학습 속도와 정확도가 향상될 수 있습니다.
+
+
+제곱 오차 함수(Mean Squared Error, MSE)와 교차 엔트로피 손실 함수(Cross-Entropy Loss Function)는 머신 러닝에서 회귀 문제와 분류 문제에 대한 손실 함수로 각각 많이 사용됩니다.
+
+[제곱 오차 함수는 회귀 문제]에서 주로 사용되며, 실제값과 예측값의 차이를 제곱하여 평균을 구한 값입니다. 즉, 실제값과 예측값 간의 차이를 제곱한 값들의 평균을 계산합니다. 제곱 오차 함수는 다음과 같이 정의됩니다.
+
+MSE = 1/n * ∑(실제값 - 예측값)^2
+
+여기서 n은 데이터의 개수를 나타냅니다. 제곱 오차 함수는 [모델이 예측한 값과 실제 값의 차이가 클수록 더 큰 손실]을 계산합니다.
+
+반면에, [교차 엔트로피 손실 함수는 분류 문제]에서 주로 사용되며, 모델이 예측한 확률 분포와 실제 레이블의 확률 분포 간의 차이를 측정합니다. 교차 엔트로피 손실 함수는 다음과 같이 정의됩니다.
+
+Cross-Entropy Loss Function = -1/n * ∑(실제값 * log(예측값) + (1-실제값) * log(1-예측값))
+
+여기서 n은 데이터의 개수를 나타냅니다. 교차 엔트로피 손실 함수는 [모델이 예측한 값과 실제 값의 차이가 클수록 더 큰 손실]을 계산합니다.
+
+교차 엔트로피 손실 함수는 분류 문제에서 더 많이 사용되며, 이유는 모델의 예측이 실제 값과 일치할 때 손실 값이 0이 되므로 모델을 더욱 정확하게 학습할 수 있기 때문입니다.
+
+
+제곱 오차 함수와 교차 엔트로피 손실 함수 각각의 특징을 좀 더 자세히 설명하겠습니다.
+
+제곱 오차 함수는 회귀 문제에서 주로 사용됩니다. 예를 들어, 주택 가격을 예측하는 회귀 모델을 학습시키기 위해 사용될 수 있습니다. 제곱 오차 함수는 모델의 예측값과 실제값 간의 차이를 제곱하여 평균을 구하는데, 이때 제곱을 함으로써 예측 오차가 큰 값에 더 큰 가중치를 주게 됩니다. 이로 인해 모델은 예측값과 실제값 간의 차이를 최소화하는 방향으로 학습됩니다.
+
+교차 엔트로피 손실 함수는 분류 문제에서 주로 사용됩니다. 예를 들어, 이미지 분류 문제를 해결하는 분류 모델을 학습시키기 위해 사용될 수 있습니다. 교차 엔트로피 손실 함수는 모델이 예측한 확률 분포와 실제 레이블의 확률 분포 간의 차이를 측정하여 손실 값을 계산합니다. 이때, 모델이 예측한 확률 분포와 실제 레이블의 확률 분포 간의 차이가 크면 더 큰 손실 값을 계산합니다. 이렇게 손실 값을 계산함으로써 모델은 정확한 레이블을 예측하는 방향으로 학습됩니다.
+
+또한, 교차 엔트로피 손실 함수는 로그 함수를 사용하기 때문에 예측값이 1 또는 0에 가까워질수록 손실 값은 무한대에 가까워집니다. 이는 모델이 레이블을 맞추는 것에 대해 더욱 높은 자극을 받게 되어 모델을 더욱 빠르게 학습시키는 효과가 있습니다.
+
+따라서, 제곱 오차 함수와 교차 엔트로피 손실 함수는 각각 회귀 문제와 분류 문제에서 주로 사용되며, 적절한 손실 함수를 선택하는 것이 모델의 학습 성능을 향상시키는 데 중요합니다
+
+
+그래디언트 소멸 문제
+
+Back propagation 과정에서, 은닉층이 많아지면 레이어들을 지나면서 출력층에서 계산된 그래디언트 값이 점점 작아져서 없어진다
+시그모이드 활성화 함수가 원인
+	시그모이드 함수의 특성상 아주 큰 양수나 아주 큰 음수가 들어오면 출력이 포화되	어서 거의 0이 됨.
+
+해결방안 
+	새로운 활성화 함수 : ReLU
+
+가중치 초기화
+미니 배치
+배치 정규화
+
+과잉적합 문제 (오버피팅)
+	해결책 
+		데이터 증강, 규제항 도입 , 드롭아웃
+
+앙상블 학습
+	개별적으로 학습시킨 여러 모델의 출력을 평균 내어 추론
+	드롭아웃이 학습 때 뉴런을 무작위로 삭제하는 것과 매번 다른 모델을 학습시키는 것과 유사함
+	드롭아웃이 앙상블 학습과 같은 효과를 대략 하난의 네트워크로 구현한 것과 비슷
+
+학습률
+	p94 (생략)
+
+--------------
+
+p 95
+
+학습률 기반 딥러닝(CNN)을 이용한 영상 분류
+
+Vision 
+pixels - edge - texton - motif - part - object
+
+Speech
+sample - spectral band - format - motif - phone - word
+
+Natural Language Processing
+character - word - NP/VP/.. - clauser - sentence - story
+
+
+layer가 많은 이유
+계층적으로 분산된 표현
+
+
+input image - low level parts - mid level parts - high level parts
+mid level parts 
+	distibuted representations
+	feature sharing
+	compositionality
+
+입력 이미지 - 엣지 - 엣지 집합 - 객체 모델
+
+
+p 97
+
+CNN의 특징 시각화는 CNN이 학습한 필터(filter)의 특징을 시각적으로 이해하고 해석하는 방법입니다. 이를 통해 CNN이 어떤 특징을 학습했는지를 이해할 수 있으며, 이는 모델의 해석 가능성(interpretability)을 높이는 데 중요한 역할을 합니다.
+
+특징 시각화는 주로 입력 이미지의 각 위치에서 CNN의 특징 추출기가 어떤 패턴을 찾아내는지를 시각화합니다. 이는 입력 이미지를 조금씩 수정하면서 어떤 특징이 활성화되는지를 관찰하는 것으로 이루어집니다. 이때 입력 이미지를 수정하는 방법은 주로 Gradient Ascent 기법이 사용됩니다.
+
+Gradient Ascent 기법은 CNN의 특정 뉴런(neuron)을 활성화하기 위해 입력 이미지를 최적화하는 방법입니다. 이 방법은 입력 이미지를 변경하면서 CNN의 마지막 레이어의 특정 뉴런에서 나오는 출력을 최대화하는 방향으로 입력 이미지를 업데이트합니다. 이 과정을 반복하면, CNN이 활성화하기 위해 찾아내야 하는 패턴이 입력 이미지에 반영되게 됩니다.
+
+이러한 방법으로 CNN의 특징 시각화를 수행하면, CNN이 어떤 특징을 추출하고, 그것이 입력 이미지의 어떤 부분에서 나타나는지를 시각적으로 확인할 수 있습니다. 이를 통해 모델의 동작 방식을 더 잘 이해할 수 있으며, 이는 모델을 개선하거나 다른 응용 분야에서 사용할 수 있는 더 강력한 모델을 만드는 데 도움이 될 수 있습니다.
+
+
+
+Convolutional Operation(합성곱 연산)은 CNN(Convolutional Neural Network)의 핵심 연산 중 하나입니다. 이 연산은 입력 데이터와 필터(filter)를 이용하여 새로운 특징 맵(feature map)을 생성하는 과정입니다.
+
+Convolutional Operation은 입력 데이터와 필터를 겹쳐서 곱한 후, 그 결과를 합산하는 연산입니다. 이 과정에서 필터의 크기만큼 입력 데이터를 이동시키면서 연산을 수행합니다. 이렇게 연산된 결과를 특징 맵으로 생성하고, 이 과정을 여러번 반복하여 최종적으로 원하는 특징을 추출합니다.
+
+아래는 Convolutional Operation을 수행하는 과정을 그림으로 나타낸 것입니다.
+
+
+
+
